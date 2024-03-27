@@ -2,8 +2,8 @@
 
 class Item
 {
-    public string Name { get; }
-    private int Quantity { get; set; }
+    public string? Name { get; }
+    private int Quantity { get; private set; }
     private DateTime CreatedDate { get; set; }
 
     public Item(string name, int quantity, DateTime createdDate = default)
@@ -29,32 +29,41 @@ public class Store
     private List<Item> items = new List<Item>();
 
     public void AddItem (Item item){
-        // if (true)
-        // {
-        //     Console.WriteLine("this item is already exists.");
-        //     return;
-        // }
-        // items.Add(item);
-        // Console.WriteLine("item added successfully");
+        bool isItemExist = items.Any((i) => i.Name == item.Name);
+        if (isItemExist)
+        {
+            Console.WriteLine("this item is already exists.");
+            return;
+        }
+        items.Add(item);
+        Console.WriteLine("item added successfully");
     }
 
     public void DeleteItem(string itemName)
     {
-        // if (Item.Name == itemName)
-        // {
-        //     items.Remove(item);
-        // }
-        // else
-        // {
-        //     Console.WriteLine("item was not found");
-        // }
+        Item? itemToBeDeleted = items.FirstOrDefault(i => i.Name == itemName);
+        if (itemToBeDeleted != null)
+        {
+            items.Remove(itemToBeDeleted);
+            Console.WriteLine("item Deleted successfully");
+        }
+        else
+        {
+            Console.WriteLine("item was not found");
+        }
     }
 
-    public void GetCurrentVolume(){}
+    public int GetCurrentVolume(){
+        return items.Sum(items => item.Quantity);
+    }
 
-    public void FindItemByName(string itemName){}
+    public Item FindItemByName(string itemName){
+        return items.FirstOrDefault(i => i.Name == itemName);
+    }
 
-    public void SortByNameAscendO(){}
+    public List<Item> SortByNameAsc(){
+        return items.OrderBy(i => i.Name).ToList();
+    }
 
 }
 
