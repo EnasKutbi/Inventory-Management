@@ -4,7 +4,7 @@ class Item
 {
     public string? Name { get; }
     private int Quantity { get; private set; }
-    private DateTime CreatedDate { get; set; }
+    public DateTime CreatedDate { get; private set; }
 
     public Item(string name, int quantity, DateTime createdDate = default)
     {
@@ -48,6 +48,13 @@ public class Store
         Console.WriteLine("item added successfully");
     }
 
+    public void printItems()
+    {
+        foreach (var item in items)
+        {
+            Console.WriteLine($"{item}");
+        }
+    }
     public void DeleteItem(string itemName)
     {
         Item? itemToBeDeleted = items.FirstOrDefault(i => i.Name == itemName);
@@ -72,6 +79,19 @@ public class Store
 
     public List<Item> SortByNameAsc(){
         return items.OrderBy(i => i.Name).ToList();
+    }
+    public IEnumerable<Item> SortByDate(SortOrder sortOrder)
+    {
+        if (sortOrder == SortOrder.ASC)
+        {
+            return items.OrderBy(item => item.CreatedDate);
+        }else{
+            return items.OrderByDescending(item => item.CreatedDate);
+        }
+    }
+    public enum SortOrder {
+        ASC,
+        DESC
     }
 
 }
