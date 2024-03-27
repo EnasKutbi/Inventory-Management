@@ -27,8 +27,17 @@ class Item
 public class Store
 {
     private List<Item> items = new List<Item>();
+    private int maximumCapacity;
+    public Store(int maximumCapacity){
+        this.maximumCapacity = maximumCapacity;
+    }
 
     public void AddItem (Item item){
+        if (GetCurrentVolume() + item.Quantity > maximumCapacity)
+        {
+            Console.WriteLine("By adding this item you Exceed the capacity of the store");
+            return;
+        }
         bool isItemExist = items.Any((i) => i.Name == item.Name);
         if (isItemExist)
         {
