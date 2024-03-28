@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 public class Store
 {
-    private List<Item> items = new List<Item>();
-    private int maximumCapacity;
+    private List<Item> _items = new List<Item>();
+
+    private int _maximumCapacity;
+
     public Store(int maximumCapacity)
     {
-        this.maximumCapacity = maximumCapacity;
+        _maximumCapacity = maximumCapacity;
     }
 
     public void AddItem(Item item)
@@ -59,7 +57,12 @@ public class Store
 
     public Item FindItemByName(string itemName)
     {
-        return items.FirstOrDefault(i => i.Name == itemName);
+        Item findItem = items.FirstOrDefault(i => i.Name == itemName);
+        if (findItem != null)
+        {
+            return findItem;
+        }
+        return null;
     }
 
     public List<Item> SortByNameAsc()

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 public class Item
 {
     public string Name { get; }
@@ -10,13 +6,20 @@ public class Item
 
     public Item(string name, int quantity, DateTime createdDate = default)
     {
-        if (quantity < 0)
+        try
         {
-            Console.WriteLine("quantity should be positive");
+            if (quantity < 0)
+            {
+                throw new Exception("quantity should be positive");
+            }
+            Name = name;
+            Quantity = quantity;
+            CreatedDate = createdDate == default ? DateTime.Now : createdDate;
         }
-        Name = name;
-        Quantity = quantity;
-        CreatedDate = createdDate == default ? DateTime.Now : createdDate;
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 
     public override string ToString()
